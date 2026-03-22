@@ -1,5 +1,20 @@
 # PULSAR 🌟
 
+## Crate Organization
+
+```
+pulsar/
+├── crates/
+│   ├── pulsar-core/       # REPL engine, evaluator, compiler interface
+│   ├── pulsar-tui/        # Ratatui frontend library
+│   └── pulsar-shell/      # Shell runtime library
+├── bins/
+│   ├── pulsar/            # TUI binary — depends on pulsar-core + pulsar-tui
+│   └── pulsar-shell/      # Shell binary — depends on pulsar-core + pulsar-shell
+└── web/
+    └── pulsar-wasm/       # WASM build — depends on pulsar-core, compiled separately
+```
+
 ## Features
 
 - **Interactive Rust REPL** — Evaluate Rust expressions and small programs without a full project setup
