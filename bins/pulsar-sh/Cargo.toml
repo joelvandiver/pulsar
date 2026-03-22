@@ -1,0 +1,12 @@
+[package]
+name = "pulsar-sh-bin"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+pulsar-core = { path = "../../crates/pulsar-core" }
+pulsar-sh = { path = "../../crates/pulsar-sh" }
+
+[[bin]]
+name = "pulsar-sh"
+path = "src/main.rs"

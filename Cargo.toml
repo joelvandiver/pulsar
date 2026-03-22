@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "crates/pulsar-core",
+    "crates/pulsar-tui",
+    "crates/pulsar-sh",
+    "bins/pulsar-tui",
+    "bins/pulsar-sh",
+    "web/pulsar-wasm",
+]
+resolver = "2"

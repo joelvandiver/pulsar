@@ -1,0 +1,7 @@
+[package]
+name = "pulsar-tui"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+pulsar-core = { path = "../pulsar-core" }

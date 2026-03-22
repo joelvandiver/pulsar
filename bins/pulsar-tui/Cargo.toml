@@ -1,0 +1,12 @@
+[package]
+name = "pulsar-tui-bin"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+pulsar-core = { path = "../../crates/pulsar-core" }
+pulsar-tui = { path = "../../crates/pulsar-tui" }
+
+[[bin]]
+name = "pulsar-tui"
+path = "src/main.rs"

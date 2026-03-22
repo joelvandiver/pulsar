@@ -7,10 +7,10 @@ pulsar/
 ├── crates/
 │   ├── pulsar-core/       # REPL engine, evaluator, compiler interface
 │   ├── pulsar-tui/        # Ratatui frontend library
-│   └── pulsar-shell/      # Shell runtime library
+│   └── pulsar-sh/         # Shell runtime library
 ├── bins/
-│   ├── pulsar/            # TUI binary — depends on pulsar-core + pulsar-tui
-│   └── pulsar-shell/      # Shell binary — depends on pulsar-core + pulsar-shell
+│   ├── pulsar-tui/        # TUI binary — depends on pulsar-core + pulsar-tui
+│   └── pulsar-sh/         # Shell binary — depends on pulsar-core + pulsar-shell
 └── web/
     └── pulsar-wasm/       # WASM build — depends on pulsar-core, compiled separately
 ```
