@@ -1,3 +1,3 @@
 fn main() {
-    println!("Hello, world!");
+    println!("{}", pulsar_core::banner::banner());
 }
