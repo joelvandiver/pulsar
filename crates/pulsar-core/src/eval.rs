@@ -1,28 +1,9 @@
-use std::collections::HashMap;
-
 use crate::{
     error::PulsarError,
     expr::{BinOp, Expr, UnaryOp},
+    session::Session,
     value::{EvalResult, Value},
 };
-
-// ── Session ───────────────────────────────────────────────────────────────────
-
-/// Persistent state across REPL inputs.
-///
-/// Pass a `Session` to [`eval`] on every input line; it carries variable
-/// bindings forward between calls.
-#[derive(Debug, Default, Clone)]
-pub struct Session {
-    /// Variable bindings installed by `let` expressions.
-    pub bindings: HashMap<String, Value>,
-}
-
-impl Session {
-    pub fn new() -> Self {
-        Self::default()
-    }
-}
 
 // ── Public entry point ────────────────────────────────────────────────────────
 
@@ -51,7 +32,7 @@ pub fn eval(expr: &Expr, session: &mut Session) -> EvalResult {
 
 // ── Internal evaluator ────────────────────────────────────────────────────────
 
-fn eval_expr(expr: &Expr, session: &mut Session) -> Result<Value, PulsarError> {
+pub(crate) fn eval_expr(expr: &Expr, session: &mut Session) -> Result<Value, PulsarError> {
     match expr {
         // Literals evaluate to themselves.
         Expr::Int(n)   => Ok(Value::Int(*n)),
