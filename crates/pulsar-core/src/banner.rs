@@ -1,8 +1,6 @@
 /// The PULSAR banner, rendered as a dot-matrix display.
 ///
-/// Uses ` ` (U+00B7 middle dot) for background grid dots and
-/// `●` (U+25CF black circle) for filled pixels, giving a
-/// LED/punch-card readout aesthetic.
+/// Uses spaces for the background and `●` (U+25CF) for filled pixels.
 pub const BANNER: &str = concat!(
     " ●●●    ●  ●   ●      ●●●     ●     ●●● \n",
     " ●  ●   ●  ●   ●      ●      ● ●    ●  ●\n",
@@ -11,9 +9,11 @@ pub const BANNER: &str = concat!(
     " ●      ●●●    ●●●    ●●●    ● ●    ●  ●",
 );
 
-/// The one-line project subtitle.
-pub const SUBTITLE: &str =
-    "Platform for Unified Learning through Systems Architecture in Rust";
+/// The two-line project subtitle.
+pub const SUBTITLE: &str = concat!(
+    "  Platform for Unified Learning \n",
+    "    through Systems Architecture in Rust",
+);
 
 /// Returns the full startup banner: dot-matrix logo + subtitle.
 pub fn banner() -> String {
@@ -28,8 +28,8 @@ mod tests {
 
     #[test]
     fn banner_contains_all_rows() {
-        // 5 dot-matrix rows + 2 rules + 1 subtitle = 8 lines
-        assert_eq!(banner().lines().count(), 8);
+        // 5 dot-matrix rows + 2 rules + 2 subtitle lines = 9 lines
+        assert_eq!(banner().lines().count(), 9);
     }
 
     #[test]
