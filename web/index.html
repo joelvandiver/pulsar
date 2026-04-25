@@ -4,37 +4,110 @@
   <meta charset="UTF-8" />
   <title>PULSAR</title>
   <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: #000000;
-      color: #ffffff;
+      background: #000;
+      color: #fff;
       font-family: monospace;
+      font-size: 1rem;
+      height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 1rem;
     }
-    pre {
-      font-size: 1.1rem;
-      line-height: 1.5;
+    #banner {
       white-space: pre;
+      line-height: 1.4;
+      flex-shrink: 0;
     }
-    #error {
-      color: #ff4444;
+    #output {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+    .line { white-space: pre; }
+    .input-line { color: #fff; }
+    .result-line { color: #999; }
+    .error-line { color: #f88; }
+    #prompt-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    #input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: monospace;
+      font-size: 1rem;
+      outline: none;
+      caret-color: #fff;
     }
   </style>
 </head>
 <body>
   <pre id="banner"></pre>
-  <pre id="error"></pre>
+  <div id="output"></div>
+  <div id="prompt-row">
+    <span>&gt;</span>
+    <input id="input" autofocus autocomplete="off" spellcheck="false" />
+  </div>
   <script type="module">
-    import init, { banner } from './pulsar-wasm/pkg/pulsar_wasm.js';
-    try {
-      await init();
-      document.getElementById('banner').textContent = banner();
-    } catch (e) {
-      document.getElementById('error').textContent = String(e);
+    import init, { banner, Repl } from './pulsar-wasm/pkg/pulsar_wasm.js';
+    await init();
+
+    document.getElementById('banner').textContent = banner();
+
+    const repl = new Repl();
+    const output = document.getElementById('output');
+    const input = document.getElementById('input');
+    const history = [];
+    let historyIdx = -1;
+
+    function appendLine(text, cls) {
+      const div = document.createElement('div');
+      div.className = 'line ' + cls;
+      div.textContent = text;
+      output.appendChild(div);
+      output.scrollTop = output.scrollHeight;
     }
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const text = input.value;
+        input.value = '';
+        historyIdx = -1;
+        if (!text.trim()) return;
+        history.unshift(text);
+        appendLine('> ' + text, 'input-line');
+        const result = repl.eval(text);
+        if (result.startsWith('error:')) {
+          appendLine(result, 'error-line');
+        } else if (result) {
+          appendLine(result, 'result-line');
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (historyIdx < history.length - 1) {
+          historyIdx++;
+          input.value = history[historyIdx];
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIdx > 0) {
+          historyIdx--;
+          input.value = history[historyIdx];
+        } else {
+          historyIdx = -1;
+          input.value = '';
+        }
+      }
+    });
   </script>
 </body>
 </html>
