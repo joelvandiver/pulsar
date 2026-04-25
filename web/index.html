@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PULSAR</title>
+  <style>
+    body {
+      background: #0d0d0d;
+      color: #c8ff00;
+      font-family: monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    pre {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      white-space: pre;
+    }
+    #error {
+      color: #ff4444;
+    }
+  </style>
+</head>
+<body>
+  <pre id="banner"></pre>
+  <pre id="error"></pre>
+  <script type="module">
+    import init, { banner } from './pulsar-wasm/pkg/pulsar_wasm.js';
+    try {
+      await init();
+      document.getElementById('banner').textContent = banner();
+    } catch (e) {
+      document.getElementById('error').textContent = String(e);
+    }
+  </script>
+</body>
+</html>
