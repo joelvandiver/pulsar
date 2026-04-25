@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+cmd="${1:-}"
+
+case "$cmd" in
+  wasm)
+    fuser -k 8080/tcp 2>/dev/null || true
+    cd "$(dirname "$0")/web/pulsar-wasm"
+    wasm-pack build --target web
+    cd ..
+    python3 -m http.server 8080
+    ;;
+  *)
+    echo "Usage: $0 <command>"
+    echo ""
+    echo "Commands:"
+    echo "  wasm   Build pulsar-wasm and serve the web app on http://localhost:8080"
+    exit 1
+    ;;
+esac
