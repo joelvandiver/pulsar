@@ -8,3 +8,4 @@ crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 pulsar-core = { path = "../../crates/pulsar-core" }
+wasm-bindgen = "0.2"
