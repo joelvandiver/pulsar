@@ -47,4 +47,4 @@ Your shell scripts deserve a type system.
 </svg>
 
 ![img](./assets/Crab_HubbleChandraSpitzer_1080.jpg)
-The Spinning Pulsar of the Crab Nebula
+The Spinning Pulsar of the Crab Nebula (*source: https://apod.nasa.gov/apod/ap220821.html*)
