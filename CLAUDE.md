@@ -1,4 +1,4 @@
-# Polaris App — Working Agreement for Claude
+# Pulsar App — Working Agreement for Claude
 
 ## Default skills (always in effect)
 
