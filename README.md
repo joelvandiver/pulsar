@@ -4,7 +4,7 @@ Every rustacean needs a shell!
 
 Your shell scripts deserve a type system.
 
-<!--> https://claude.ai/code/artifact/ec7e5188-d07a-404a-bf2d-dccb3b41299d?via=auto_preview-->
+<!-- https://claude.ai/code/artifact/ec7e5188-d07a-404a-bf2d-dccb3b41299d?via=auto_preview -->
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="pulsar-mark" viewBox="0 0 256 256">
