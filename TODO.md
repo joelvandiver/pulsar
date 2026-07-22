@@ -12,7 +12,7 @@ tests pass → CI green → change documented. Each ☐ lists its Red step first
 - [x] Red: per-crate `smoke::it_compiles` failing tests · Green: workspace +
       5 crate skeletons (`pulsar-syntax`, `-core`, `-host`, `-shell`, `-wasm`)
       *(done: commits `18c28dd`, `4913687` — 8 tests pass locally)*
-- [ ] CI workflow: `fmt`, `clippy -D warnings`, `test --workspace`,
+- [x] CI workflow: `fmt`, `clippy -D warnings`, `test --workspace`,
       `wasm-check` (core+syntax on wasm32 target — enforces ADR-3)
       *(partial: `4913687` added fmt/clippy/test; `wasm-check` job still missing)*
 - [ ] Workspace lints, MSRV pin, README with vision + layout
