@@ -2,5 +2,13 @@
 resolver = "2"
 members = ["crates/*"]
 
+[workspace.package]
+edition = "2024"
+rust-version = "1.96.0"
+
 [workspace.dependencies]
 pulsar-core = { path = "crates/pulsar-core" }
+
+[workspace.lints.clippy]
+style = { level = "allow", priority = -1 }
+unwrap_used = "deny"
