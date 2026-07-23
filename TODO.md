@@ -4,6 +4,12 @@ Task breakdown of [docs/plans/0001-pulsar-roadmap.md](docs/plans/0001-pulsar-roa
 Rules: work top-down unless noted; a task is **done** only when tests written →
 tests pass → CI green → change documented. Each ☐ lists its Red step first.
 
+**Granularity:** each ☐ is ONE small step — write the named failing test, then the
+minimal code to make it pass. Milestones are expanded into micro-steps
+**just-in-time** as you reach them (so this list stays short); ask to break down the
+next milestone when you start it. M1 is expanded; M2–M9 are still at milestone
+grain until then.
+
 ## M0 — Scaffold + CI
 
 - [x] Decide + record ADRs 1–4 in `docs/adr/` (interpret-don't-compile, syn→own
@@ -24,15 +30,38 @@ tests pass → CI green → change documented. Each ☐ lists its Red step first
       MSRV pin needs a CI job on the pinned toolchain to prove it — CI currently
       runs `@stable` only.)*
 
-## M1 — Parse pipeline
+## M1 — Parse pipeline (source → Pulsar AST)
 
-- [ ] Red: literal/binary-precedence AST tests · Green: syn → Pulsar AST lowering
-      for expressions, with spans
-- [ ] Red: `let` statement test · Green: statement lowering
-- [ ] Red: REPL-fragment test (bare `1 + 1` parses) · Green: fragment parse mode
-- [ ] Red: parse-error-has-span test · Green: error type with line/col
-- [ ] Refactor: `insta` snapshot tests for AST dumps
-- [ ] Document: start `docs/language.md` (grammar subset)
+Each step is one failing test + the minimal lowering to pass it. All in
+`pulsar-syntax`; the evaluator is M2, so these assert *AST shape* only.
+
+- [ ] **Int literal.** Red: `parse_literal_int` — `parse_expr("42")` →
+      `Expr::Lit(Lit::Int(42))`. Green: minimal `ast::{Expr, Lit}` enums +
+      `parse_expr` via `syn::parse_str::<syn::Expr>`, lowering the int case only.
+- [ ] **String literal.** Red: `parse_literal_str` — `"hi"` →
+      `Expr::Lit(Lit::Str("hi"))`. Green: lower `syn::Lit::Str`.
+- [ ] **Bool literal.** Red: `parse_literal_bool` — `true`/`false` → `Lit::Bool`.
+      Green: lower the bool literal case.
+- [ ] **Binary op + precedence.** Red: `parse_binary_expr` — `1 + 2 * 3` →
+      `Add(1, Mul(2, 3))` (precedence preserved, not left-to-right). Green: lower
+      `syn::ExprBinary` recursively; map `+ - * /`.
+- [ ] **Spans.** Red: `expr_carries_span` — a lowered node reports its source
+      line/col. Green: attach a `Span` to lowered nodes (carried, not yet rendered).
+- [ ] **`let` statement.** Red: `parse_let_binding` — `let x = 5;` →
+      `Stmt::Let { pat: "x", init: Expr::Lit(Int(5)) }`. Green: add `ast::Stmt`,
+      lower `syn::Stmt::Local`.
+- [ ] **REPL fragment mode.** Red: `parse_repl_fragment` — bare `1 + 1` (not a full
+      file) parses to a fragment (trailing expr / expr-stmt). Green: a fragment
+      entry point distinct from whole-file parsing — the REPL's grammar mode.
+- [ ] **Parse error with span.** Red: `parse_error_reports_span` — `let x = ;`
+      returns `Err` naming line/col, **not** a panic. Green: error type wrapping
+      `syn::Error`, extracting line/col.
+- [ ] **Refactor.** `insta` snapshot tests for AST dumps, so future grammar growth
+      is cheap to verify. (No new behavior; snapshots of the cases above.)
+- [ ] **Document.** Start `docs/language.md` — the supported grammar subset so far
+      (literals, `+ - * /`, `let`), with the "growing subset" framing.
+
+*CI for all M1 steps: existing `test` + `wasm-check` jobs (no new job needed).*
 
 ## M2 — Evaluator core
 

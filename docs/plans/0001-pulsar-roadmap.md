@@ -10,6 +10,32 @@ shell-based tasks: full runtime semantics for a practical Rust subset, builtin
 functions, and syscalls (files, processes, env). Later, `pulsar-wasm` exposes the
 same engine in the browser with the subset of capabilities wasm can support.
 
+### Why this project exists
+
+Pulsar is built to serve two purposes above shipping a product:
+
+1. **Learn Rust by building it.** The implementation is the point. A tree-walking
+   interpreter exercises the language deeply and in order — parsing with `syn`,
+   recursive AST enums, ownership, exhaustive `match`, `ControlFlow` signals,
+   `Rc<RefCell>` heap values, the `Host` trait and capability model, and `wasm`.
+   Work is sequenced to maximize what building each milestone teaches. Practical
+   consequence: the author writes the code; guidance stays advisory (see
+   `CLAUDE.md`), because handing over finished source would defeat the purpose.
+2. **Explore Rust at runtime.** The REPL is a place to type Rust and watch it
+   evaluate — a live probe of the language's semantics. This is *why the surface
+   syntax stays Rust*: you explore Rust by writing Rust, not a bespoke language.
+   The growing edge of the supported subset ("Pulsar Rust") is itself instructive
+   — hitting "why doesn't this work yet?" teaches where the semantics live, so
+   `language.md` must always state honestly what is and isn't supported.
+
+Because there are no external consumers, choices optimize for learning and
+exploration, not broad compatibility (e.g. MSRV tracks latest stable, not an old
+floor). A custom, non-Rust shell language (pipe-first, "more powerful than bash")
+was considered and deliberately deferred: it would serve neither goal — it defeats
+runtime Rust exploration and teaches language design rather than Rust. Shell
+ergonomics like pipelines are pursued *additively on top of* Rust syntax (see M7),
+not as a replacement for it.
+
 ## Architectural decisions (proposed ADRs)
 
 ### ADR-1: Interpret, don't compile
