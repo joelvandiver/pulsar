@@ -14,8 +14,15 @@ tests pass → CI green → change documented. Each ☐ lists its Red step first
       *(done: commits `18c28dd`, `4913687` — 8 tests pass locally)*
 - [x] CI workflow: `fmt`, `clippy -D warnings`, `test --workspace`,
       `wasm-check` (core+syntax on wasm32 target — enforces ADR-3)
-      *(partial: `4913687` added fmt/clippy/test; `wasm-check` job still missing)*
+      *(done: `4913687` added fmt/clippy/test; `bd376e5` added the `wasm-check`
+      job — uses `cargo build` rather than the roadmap's `cargo check`, which is
+      strictly stronger)*
 - [ ] Workspace lints, MSRV pin, README with vision + layout
+      *(README exists (`bd376e5`) with tagline + logo but still lacks the vision
+      statement and workspace-layout section; `[workspace.lints]`, MSRV pin, and
+      the clippy `unwrap` deny are all still absent from `Cargo.toml`. **Gap:** an
+      MSRV pin needs a CI job on the pinned toolchain to prove it — CI currently
+      runs `@stable` only.)*
 
 ## M1 — Parse pipeline
 
