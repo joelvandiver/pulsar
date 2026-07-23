@@ -4,7 +4,7 @@ pub fn crate_name() -> &'static str {
 
 pub fn add(left: u64, right: u64) -> u64 {
     let test: Result<String, ()> = Ok("abc".to_string());
-    let _ = test.unwrap();
+    let _ = test.expect("This should pass.");
     left + right
 }
 
