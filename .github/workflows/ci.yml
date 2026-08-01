@@ -19,10 +19,6 @@ jobs:
           components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
         with:
-          toolchain: ${{ matrix.toolchain }}
-          components: rustfmt, clippy
-      - uses: Swatinem/rust-cache@v2
-        with:
           key: ${{ matrix.toolchain }}
       - name: Format
         run: cargo fmt --all --check
