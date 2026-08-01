@@ -1,6 +1,6 @@
 # PULSAR
 
-Every rustacean needs a shell!
+> Platform for Unified Learning Systems Architecture in Rust
 
 <!--Your shell scripts deserve a type system.-->
 <!-- https://claude.ai/code/artifact/ec7e5188-d07a-404a-bf2d-dccb3b41299d?via=auto_preview -->
